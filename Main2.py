@@ -1,6 +1,6 @@
 import pandas as pd
 from Reader import Reader
-from Parser import Parser
+from Parser2 import Parser
 from Analyzer import Analyzer
 import time
 import multiprocessing
