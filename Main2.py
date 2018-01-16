@@ -14,11 +14,12 @@ if __name__ == '__main__':
     parser = Parser()
     analyzer = Analyzer()
 
-    # Gathering all logs in one list
     logs = reader.read_dir('../logs/*',10)
+
     start = time.time()
     parsed_logs = list(pool.map(parser.parse,logs))
     end = time.time()
+    
     print('[Sucess] Logs parsed within %.2f s' % (end-start))
 
     # add to cassandra column-oriented
