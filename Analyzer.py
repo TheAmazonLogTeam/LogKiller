@@ -26,7 +26,7 @@ class Analyzer:
         for key in dictionnary.keys():
             print("\n*" + str(key))
             print(dictionnary[key])
-    pd.
+    
     # simple test, à améliorer
     def import_to_neo4j(self, connection_logs_df, command_logs_df):
         start = time.time()
