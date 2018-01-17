@@ -8,7 +8,7 @@ from string import digits
 class Parser:
 
     def parse_all_logs(self, logs):
-
+        
         start = time.time()
 
         connection_logs = []

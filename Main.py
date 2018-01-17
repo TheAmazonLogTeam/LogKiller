@@ -11,7 +11,7 @@ if __name__ == '__main__':
     analyzer = Analyzer()
 
     # Gathering all logs in one list
-    logs = reader.read_dir('../logs/*',10)
+    logs = reader.read_dir('../logs/*',100)
 
     # Parsing each log into a list of string
     connection_logs, command_logs, standard_logs_1, standard_logs_2, unknown_logs = parser.parse_all_logs(logs)

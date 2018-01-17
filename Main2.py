@@ -3,24 +3,17 @@ from Reader import Reader
 from Parser2 import Parser
 from Analyzer import Analyzer
 import time
-import multiprocessing
 from cassandra.cluster import Cluster
-
-pool = multiprocessing.Pool()
+import pprint
 
 if __name__ == '__main__':
 
     reader = Reader()
     parser = Parser()
-    analyzer = Analyzer()
 
     logs = reader.read_dir('../logs/*',10)
 
-    start = time.time()
-    parsed_logs = list(pool.map(parser.parse,logs))
-    end = time.time()
-    
-    print('[Sucess] Logs parsed within %.2f s' % (end-start))
+    parsed_logs = parser.parse_all(logs)
+    sorted_logs = parser.sort(parsed_logs)
 
-    # add to cassandra column-oriented
-    # query ip and command log to fill neo4j
+    pprint.pprint(sorted_logs['Unknown'][:10])
