@@ -56,11 +56,11 @@ class Analyzer:
             tx.create(u)
 
         # Connexions IP
-        for hostname, df_select in connection_logs_df.groupby('hostname'):
-            for ip, count in df_select.groupby('ip'):
-                # count = int(np.mean(count.values))
+        for hostname, df_connection in connection_logs_df.groupby('hostname'):
+            for ip, df_connection2 in df_connection.groupby('ip'):
+                count = len(df_connection2)
                 tx.run("MATCH (h:Hostname {id:\"" + hostname + "\"}) MATCH (i:IP {id:\"" +
-                       ip + "\"}) CREATE (h)-[:CALLED_BY{count:\"" + str(1) + "\"}]->(i)")
+                       ip + "\"}) CREATE (h)-[:CONNEXION{count:\"" + str(count) + "\"}]->(i)")
 
         # Commandes Bash
         for hostname, df_hostname in command_logs_df.groupby('hostname'):
@@ -70,7 +70,7 @@ class Analyzer:
                     command = command[0]
                     count = len(df_command)
                     tx.run("MATCH (h:Hostname {id:\"" + hostname + "\"}) MATCH (u:User {id:\"" +
-                           user + "\"}) CREATE (u)-[:" + command + "{arg:\"" + arg + "\",count:\"" +str(count) + "\"}]->(h)")
+                           user + "\"}) CREATE (u)-[:COMMAND{command:\"" + command + "\" ,arg:\"" + arg + "\",count:\"" +str(count) + "\"}]->(h)")
 
 
 
