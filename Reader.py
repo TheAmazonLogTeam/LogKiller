@@ -12,7 +12,7 @@ class Reader:
         results = []
         with open(file_path, newline='') as inputfile:
             for row in inputfile:
-                results.append(row)
+                results.append(row.replace('\n', '').replace('\t', ''))
         return results
 
     def read_dir(self, dir_path, nb_files_max=np.inf):
@@ -28,6 +28,6 @@ class Reader:
             res += self.read_file(filename)
             p += 1
 
-        print('\n[Sucess] %d files loaded' % (p-1))
+        print('\n[Success] %d files loaded' % (p-1))
 
         return res
