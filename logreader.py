@@ -24,6 +24,6 @@ def read_dir(dir_path, nb_files_max=np.inf):
         res += read_file(filename)
         p += 1
 
-    print('\n[Sucess] %d files loaded' % (p-1))
+    print('\n[Sucess] %d files loaded' % (p))
 
     return res
