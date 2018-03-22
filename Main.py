@@ -7,7 +7,7 @@ import numpy as np
 analyzer = MessageLogAnalyzer()
 
 # Import des logs
-logs = read_dir('/Users/maxime/log/test_bug_10/*.log')
+logs = read_dir('/Users/maxime/log/test_bug_10/*.log',0)
 
 # Parsing des logs en df
 df_log = parse_all(logs)
