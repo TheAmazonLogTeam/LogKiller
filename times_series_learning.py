@@ -4,7 +4,6 @@ import pandas as pd
 from scipy.spatial.distance import euclidean
 from fastdtw import fastdtw
 from scipy.stats.mstats import mquantiles
-import sortedcontainers
 from collections import defaultdict
 from datetime import datetime
 import time
@@ -20,7 +19,7 @@ import time
 
 class TimesSeriesLearning (object):
 
-    def __init__(self, parameters, distribution_period, level_threshold):
+    def __init__(self, parameters, distribution_period, distribution, level_threshold):
         self.learning_week_period = 0
         self.period = parameters[0]
         self.m_avg_period = parameters[1]
@@ -31,9 +30,9 @@ class TimesSeriesLearning (object):
         self.start = False
         self.level_threshold = level_threshold
         self.profile = None
-        self.distribution = sortedcontainers.SortedDict(sortedcontainers.SortedList())
         self.quantiles = defaultdict(list)
         self.distribution_period= distribution_period # in minutes
+        self.distribution = distribution
         self.max_spread=0
 
     # Resample
@@ -116,7 +115,7 @@ class TimesSeriesLearning (object):
     # frequentist view
     def add_to_dist(self, dist_score, date):
         ind = (24*60*7) // self.distribution_period
-        if self.threshold(dist_score,ind):
+        if self.threshold(dist_score, ind):
             self.distribution[ind].add(dist_score)
         else:
             print("Alert Anomaly detected")

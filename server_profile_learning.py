@@ -1,11 +1,12 @@
 import times_series_learning as tsl
 import numpy as np
+import sortedcontainers
 import pandas as pd
 
 
 class ServerProfileLearning(object):
 
-    def __init__(self, data, parameters):
+    def __init__(self, data, parameters, distribution):
         self.label_number = len(np.unique(data['label'].values))
         self.label = np.unique(data['label'].values)
         self.data = data
@@ -13,6 +14,8 @@ class ServerProfileLearning(object):
         self.data_prep = None
         self.hostname = self.data.iloc[1, 0]
         self.server_profile = dict()
+        self.distribution = distribution
+# sortedcontainers.SortedDict(sortedcontainers.SortedList())
 
     def preprocess_data(self):
         self.data_prep = self.data.drop(self.data.columns[1:len(self.data.columns) - 1], axis=1)
