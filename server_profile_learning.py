@@ -16,18 +16,19 @@ class ServerProfileLearning(object):
         self.hostname = self.data.iloc[0, 1]
         self.server_profile = dict()
         self.distribution = distribution  # distribution od distance list same for all servers all clusters
-        self.distribution_period = distribution_period  # distribution period same as distance period
+        self.distribution_period = distribution_period  # distribution period where we aggregate distance score
         self.level_threshold = level_threshold  # level we consider for outliers
 
     # sortedcontainers.SortedDict(sortedcontainers.SortedList())
 
-    def preprocess_data(self):
-        self.data_prep = self.data.drop(self.data.columns[1:len(self.data.columns) - 1], axis=1)
-        self.data_prep = self.data_prep.groupby(['label'])
+    def preprocess_data(self, data):
+        data_prep = data.drop(self.data.columns[1:len(self.data.columns) - 1], axis=1)
+        data_prep = data_prep.groupby(['label'])
+        return data_prep
 
     def set_profile(self):
         t0 = time.time()
-        self.preprocess_data()
+        self.data_prep = self.preprocess_data(self.data)
         t = tsl.TimesSeriesLearning(self.parameters[0, :],
                                     self.distribution_period, self.distribution, self.level_threshold)
         t.set_profile(self.data, True)
@@ -43,3 +44,12 @@ class ServerProfileLearning(object):
             print('cluster number ' + str(k) + ' of hostname: ' + self.hostname)
             i += 1
         print("Learning Server" + self.hostname + " Done in " + str(time.time() - t0))
+
+    def process_distance(self,streaming_data):
+        t0 = time.time()
+
+        streaming_data_prep = self.preprocess_data(streaming_data)
+        for k, v in streaming_data_prep:
+            if k in self.server_profile.keys():
+                t = self.server_profile[self.self.hostname + "_" + str(k)]
+                t.compute_distance_profile(v)
