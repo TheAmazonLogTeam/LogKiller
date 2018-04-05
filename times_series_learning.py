@@ -84,7 +84,7 @@ class TimesSeriesLearning(object):
 
     # Moving average
     def mov_avg(self, data):
-        return data.rolling(window=int(self.m_avg_period)).mean().fillna(method='backfill')
+        return data.ewm(com=int(self.m_avg_period), adjust=True).mean().fillna(method='backfill')
 
     # Dataframe for grouping per week
     def weekly_average(self, data):
@@ -107,7 +107,7 @@ class TimesSeriesLearning(object):
         data = self.mov_avg(self.get_time_series_rs(data))
         anomaly, max_spread, min_spread = self.eval_max_spread(data)
         d, date = self.compute_distance(data, self.profile)
-        threshold, quant = self.threshold(d, date)
+        threshold, quant = self.add_to_dist(d,date)
 
         if anomaly or threshold:
             print("Anomaly detected \n")
@@ -115,7 +115,7 @@ class TimesSeriesLearning(object):
             print("profile_distance anomaly", threshold)
         else:
             print("Batch correct \n")
-        return d, date, threshold, quant
+        return anomaly, max_spread, min_spread, d, date, threshold, quant
 
     # Online Mean not necessary as we will plot distribution
     # contiguous data
@@ -160,16 +160,19 @@ class TimesSeriesLearning(object):
         if d < quant[0] or d > quant[1]:
             return False, quant
         else:
+
             return True, quant
 
     # adding or not the distance to the actual distribution
     # frequentist view
     def add_to_dist(self, dist_score, date):
-        level_ok = False
+
         ind = (24 * 60 * 7) // self.distribution_period
-        if self.threshold(dist_score, ind):
+        level_ok, quant = self.threshold(dist_score, ind)
+
+        if level_ok:
             self.distribution[ind].add(dist_score)
-            level_ok = True
+
         else:
             print("Alert Anomaly detected, the distance is in the " + str(self.level_threshold))
-        return level_ok
+        return level_ok, quant

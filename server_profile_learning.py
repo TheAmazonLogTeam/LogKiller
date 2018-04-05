@@ -15,7 +15,7 @@ class ServerProfileLearning(object):
         self.data_prep = None
         self.hostname = self.data.iloc[0, 1]
         self.server_profile = dict()
-        self.distribution = distribution  # distribution od distance list same for all servers all clusters
+        self.distribution = distribution  # distribution od distance list same for all servers all clusters be carefull sorted containers
         self.distribution_period = distribution_period  # distribution period where we aggregate distance score
         self.level_threshold = level_threshold  # level we consider for outliers
 
@@ -45,11 +45,27 @@ class ServerProfileLearning(object):
             i += 1
         print("Learning Server" + self.hostname + " Done in " + str(time.time() - t0))
 
-    def process_distance(self,streaming_data):
+    def process_distance(self, streaming_data):
         t0 = time.time()
-
         streaming_data_prep = self.preprocess_data(streaming_data)
         for k, v in streaming_data_prep:
             if k in self.server_profile.keys():
                 t = self.server_profile[self.self.hostname + "_" + str(k)]
-                t.compute_distance_profile(v)
+                anomaly, max_spread, min_spread, d, date, threshold, quant = t.compute_distance_profile(v)
+                if anomaly:
+                    break
+            else:
+                print("Logs does not belong to any cluster")
+                break
+
+        return anomaly, max_spread, min_spread, d, date, threshold, quant
+
+    def simulate_streaming(self, streaming_data):
+        streaming_data.index = pd.to_datetime(streaming_data.timestamp, format='%Y-%m-%d %H:%M:%S')
+        data_list =[]
+        date = streaming_data.index[0]
+        while date < streaming_data.index[-1]:
+            data_list.append(streaming_data.loc[date:date+self.distribution_period].reset_index())
+            date += self.distribution_period
+
+        return data_list
