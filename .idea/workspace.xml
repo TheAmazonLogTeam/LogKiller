@@ -20,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="server_profile_learning.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="server_profile_learning.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1044">
-              <caret line="53" column="40" lean-forward="true" selection-start-line="53" selection-start-column="40" selection-end-line="53" selection-end-column="40" />
+            <state relative-caret-position="468">
+              <caret line="34" column="82" selection-start-line="34" selection-start-column="67" selection-end-line="34" selection-end-column="82" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -32,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="times_series_learning.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="times_series_learning.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/times_series_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="708">
-              <caret line="98" column="54" lean-forward="true" selection-start-line="98" selection-start-column="54" selection-end-line="98" selection-end-column="54" />
+            <state relative-caret-position="468">
+              <caret line="31" column="28" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="28" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -106,6 +106,9 @@
       <find>learning_wee</find>
       <find>lwp</find>
       <find>learning_week_period</find>
+      <find>distribution</find>
+      <find>self.level_threshold</find>
+      <find>level_threshold</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -283,12 +286,18 @@
       <option name="project" value="LOCAL" />
       <updated>1522925969119</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Streaming test finished.">
+      <created>1523199384664</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1523199384664</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="125" y="13" width="3076" height="1788" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49806702" visible="true" weight="0.12223711" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -317,7 +326,8 @@
     <MESSAGE value="Distribution and max sprad implemented, let's test" />
     <MESSAGE value="Test phase 1 + class_time_series class who produce a dataframe of logpath file with date as index and server name as a column" />
     <MESSAGE value="test phase 2 done" />
-    <option name="LAST_COMMIT_MESSAGE" value="test phase 2 done" />
+    <MESSAGE value="Streaming test finished." />
+    <option name="LAST_COMMIT_MESSAGE" value="Streaming test finished." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
@@ -621,22 +631,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
+    <entry file="file://$PROJECT_DIR$/times_series_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1044">
-          <caret line="53" column="40" lean-forward="true" selection-start-line="53" selection-start-column="40" selection-end-line="53" selection-end-column="40" />
+        <state relative-caret-position="468">
+          <caret line="31" column="28" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="28" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/times_series_learning.py">
+    <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
-          <caret line="98" column="54" lean-forward="true" selection-start-line="98" selection-start-column="54" selection-end-line="98" selection-end-column="54" />
+        <state relative-caret-position="468">
+          <caret line="34" column="82" selection-start-line="34" selection-start-column="67" selection-end-line="34" selection-end-column="82" />
           <folding>
-            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>

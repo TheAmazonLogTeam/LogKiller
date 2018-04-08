@@ -20,8 +20,8 @@ import time
 
 class TimesSeriesLearning(object):
 
-    def __init__(self, parameters, distribution_period, distribution, level_threshold):
-        #self.learning_week_period = lwp  # seconds between first and last element
+    def __init__(self, parameters, distribution_period, level_threshold):
+        # self.learning_week_period = lwp  # seconds between first and last element
         self.period = parameters[0]  # Sampling Period
         self.m_avg_period = parameters[1]  # m_avg_period
         self.dist_period = parameters[2]  # distance period evaluation
@@ -31,23 +31,22 @@ class TimesSeriesLearning(object):
         self.start = False
         self.level_threshold = level_threshold
         self.profile = None
-        self.quantiles = defaultdict(list)
         self.distribution_period = distribution_period  # in minutes
-        self.distribution = distribution
         self.max_spread = 0
         self.min_spread = np.inf
 
     # Resample
     def get_time_series_rs(self, data, streaming=False):
         # t0 = time.time()
+        d_min = data.drop(data.columns[1:], axis=1)
+        d_min = d_min.resample(str(self.period) + 'min').count()
         if streaming:
-            index = pd.date_range(start=data.index[0], periods=self.dist_period, freq='min')
-            d_min = data.drop(data.columns[1:], axis=1)
-            d_min = d_min.resample(index).count()
-        else:
-            d_min = data.drop(data.columns[1:], axis=1)
-            d_min = d_min.resample(str(self.period)+'min').count()
-
+            data_count = np.zeros(15, dtype=int)
+            data_count[:d_min.timestamp.values.shape[0]] = d_min.timestamp.values
+            d_min = pd.DataFrame(data_count,
+                                 columns=['timestamp'],
+                                 index=pd.date_range(start=data.index[0],
+                                                     periods=int(self.dist_period), freq='min')).fillna(0)
         # print('Resample processed in:', time.time()-t0)
         return d_min
 
@@ -74,8 +73,8 @@ class TimesSeriesLearning(object):
             min_spread = np.amin(d.microseconds.values)
         elif data.shape[0] == 2:
             d = (data.index[0] - data.index[1])
-            max_spread = max(d.seconds)
-            min_spread = min(d.microseconds)
+            max_spread = d.seconds
+            min_spread = d.microseconds
         else:
             max_spread = self.max_spread
             min_spread = self.min_spread
@@ -108,22 +107,60 @@ class TimesSeriesLearning(object):
         self.compute_max_spread(data)
         self.profile = self.weekly_average(self.mov_avg(data_rs))
 
-    def compute_distance_profile(self, data):
+    def compute_distance_profile(self, data, distribution, verbose=False):
         anomaly = False
+        threshold = False
         data.index = pd.to_datetime(data.timestamp, format='%Y-%m-%d %H:%M:%S')
         anomaly, max_spread, min_spread = self.eval_max_spread(data)
-        data_rs = self.weekly_average(self.mov_avg(self.get_time_series_rs(data,True)))
-        print(data_rs)
+        data_rs = self.weekly_average(self.mov_avg(self.get_time_series_rs(data, True)))
         d, date = self.compute_distance(data_rs, self.profile)
-        threshold, quant = self.add_to_dist(d,date)
+        threshold, quant = self.add_to_dist(d, date, distribution)
 
-        if anomaly or threshold:
+        if anomaly or not threshold:
             print("Anomaly detected \n")
             print("log spread anomaly", anomaly)
-            print("profile_distance anomaly", threshold)
-        else:
+            print("profile_distance anomaly", not threshold)
+            print("distance detected is:", d)
+        elif verbose:
             print("Batch correct \n")
         return anomaly, max_spread, min_spread, d, date, threshold, quant
+
+    def compute_distance(self, streaming_data, profile_type):
+
+        minute = streaming_data.index.get_level_values('minute')[0]
+        hour = streaming_data.index.get_level_values('hour')[0]
+        weekday = streaming_data.index.get_level_values('weekday')[0]
+        date = weekday * 1440 + hour * 60 + minute
+        # print('caca', streaming_data[weekday][hour][minute:int(minute + self.dist_period)].values)
+        # print('pipi',profile_type[weekday][hour][minute:int(minute + self.dist_period)].values)
+        d, _ = fastdtw(profile_type[weekday][hour][minute:int(minute + self.dist_period)].values,
+                       streaming_data[weekday][hour].values,
+                       radius=int(self.dist_radius), dist=euclidean)
+        # print('distance: ', d)
+        return d, date
+
+    # compute quantiles and see if d belongs to
+    def threshold(self, d, ind, distribution):
+        # print(distribution)
+        quant = mquantiles(distribution[int(ind)], prob=[self.level_threshold, (1 - self.level_threshold)])
+        if len(quant) < 2:
+            return True, quant
+        if d > quant[1]:
+            return False, quant
+        else:
+            return True, quant
+
+    # adding or not the distance to the actual distribution
+    # frequentist view
+    def add_to_dist(self, dist_score, date, distribution):
+
+        ind = date // self.distribution_period
+        level_ok, quant = self.threshold(dist_score, ind, distribution)
+        if level_ok:
+            distribution[int(ind)].add(float(dist_score))
+        else:
+            print("Alert Anomaly detected, the distance is in the " + str(self.level_threshold))
+        return level_ok, quant
 
     # Online Mean not necessary as we will plot distribution
     # contiguous data
@@ -145,42 +182,3 @@ class TimesSeriesLearning(object):
 
     # compute distance the size of the window of the streaming batch should be
     # arrange before calling this function
-    def compute_distance(self, streaming_data, profile_type):
-
-        minute = streaming_data.index.get_level_values('minute')[0]
-        hour = streaming_data.index.get_level_values('hour')[0]
-        weekday = streaming_data.index.get_level_values('weekday')[0]
-        date = weekday * 1440 + hour * 60 + minute
-        # print(profile_type[weekday][hour][minute:int(minute + self.dist_period)])
-        print('caca', streaming_data[weekday][hour][minute:int(minute + self.dist_period)])
-        d, _ = fastdtw(profile_type[weekday][hour][int(minute + self.dist_period)],
-                       streaming_data[weekday][hour][minute:int(minute + self.dist_period)], self.dist_radius, dist=euclidean)
-        return d, date
-
-    # compute quantiles and see if d belongs to
-    # improvement store the quantiles
-    def threshold(self, d, ind):
-        if self.quantiles[ind] is None:
-            quant = mquantiles(self.distribution[ind], prob=[self.level_threshold, (1 - self.level_threshold)])
-        else:
-            quant = self.quantiles[ind]
-
-        if d < quant[0] or d > quant[1]:
-            return False, quant
-        else:
-
-            return True, quant
-
-    # adding or not the distance to the actual distribution
-    # frequentist view
-    def add_to_dist(self, dist_score, date):
-
-        ind = (24 * 60 * 7) // self.distribution_period
-        level_ok, quant = self.threshold(dist_score, ind)
-
-        if level_ok:
-            self.distribution[ind].add(dist_score)
-
-        else:
-            print("Alert Anomaly detected, the distance is in the " + str(self.level_threshold))
-        return level_ok, quant
