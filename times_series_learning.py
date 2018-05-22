@@ -41,7 +41,7 @@ class TimesSeriesLearning(object):
         # t0 = time.time()
         d_min = data.drop(data.columns[1:], axis=1)
         if self.processus:
-            d_min = d_min.resample(str(self.period) + 'min').cumsum()
+            d_min = d_min.resample(str(self.period) + 'S').count().cumsum()
         else:
             d_min = d_min.resample(str(self.period) + 'min').count()
         if streaming:
