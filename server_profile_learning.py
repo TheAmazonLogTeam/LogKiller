@@ -8,7 +8,7 @@ import pandas as pd
 
 class ServerProfileLearning(object):
 
-    def __init__(self, data, parameters, distribution, distribution_period, level_threshold, verbose=False):
+    def __init__(self, data, parameters, distribution, distribution_period, level_threshold, processus=True, verbose=False):
         self.label_number = len(np.unique(data['label'].values))
         self.label = np.unique(data['label'].values)
         self.data = data
@@ -20,6 +20,7 @@ class ServerProfileLearning(object):
         self.distribution_period = distribution_period  # distribution period where we aggregate distance score
         self.level_threshold = level_threshold  # level we consider for outliers
         self.verbose = verbose
+        self.processus = processus
 
     # sortedcontainers.SortedDict(sortedcontainers.SortedList())
 
@@ -32,14 +33,14 @@ class ServerProfileLearning(object):
         t0 = time.time()
         self.data_prep = self.preprocess_data(self.data)
         t = tsl.TimesSeriesLearning(self.parameters[0, :],
-                                    self.distribution_period, self.level_threshold)
+                                    self.distribution_period, self.level_threshold, self.processus)
         t.set_profile(self.data)
         self.server_profile[self.hostname + "_general"] = t
         i = 0
 
         for k, v in self.data_prep:
             t = tsl.TimesSeriesLearning(self.parameters[i, :],
-                                        self.distribution_period, self.level_threshold)
+                                        self.distribution_period, self.level_threshold, self.processus)
             t.set_profile(v)
             self.server_profile[self.hostname + "_" + str(k)] = t
             print('cluster number ' + str(k) + ' of hostname: ' + self.hostname)

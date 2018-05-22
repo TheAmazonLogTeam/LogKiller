@@ -20,7 +20,7 @@ import time
 
 class TimesSeriesLearning(object):
 
-    def __init__(self, parameters, distribution_period, level_threshold):
+    def __init__(self, parameters, distribution_period, level_threshold, processus):
         # self.learning_week_period = lwp  # seconds between first and last element
         self.period = parameters[0]  # Sampling Period
         self.m_avg_period = parameters[1]  # m_avg_period
@@ -34,12 +34,16 @@ class TimesSeriesLearning(object):
         self.distribution_period = distribution_period  # in minutes
         self.max_spread = 0
         self.min_spread = np.inf
+        self.processus = processus
 
     # Resample
     def get_time_series_rs(self, data, streaming=False):
         # t0 = time.time()
         d_min = data.drop(data.columns[1:], axis=1)
-        d_min = d_min.resample(str(self.period) + 'min').count()
+        if self.processus:
+            d_min = d_min.resample(str(self.period) + 'min').cumsum()
+        else:
+            d_min = d_min.resample(str(self.period) + 'min').count()
         if streaming:
             data_count = np.zeros(15, dtype=int)
             data_count[:d_min.timestamp.values.shape[0]] = d_min.timestamp.values
@@ -105,15 +109,22 @@ class TimesSeriesLearning(object):
         data_rs = self.get_time_series_rs(data)
         self.learning_week_period = (data_rs.index[0] - data_rs.index[-1]).seconds
         self.compute_max_spread(data)
-        self.profile = self.weekly_average(self.mov_avg(data_rs))
+        if self.processus:
+            self.profile = self.weekly_average(data_rs)
+        else:
+            self.profile = self.weekly_average(self.mov_avg(data_rs))
 
     def compute_distance_profile(self, data, distribution, verbose=False):
         anomaly = False
         threshold = False
         data.index = pd.to_datetime(data.timestamp, format='%Y-%m-%d %H:%M:%S')
         anomaly, max_spread, min_spread = self.eval_max_spread(data)
-        data_rs = self.weekly_average(self.mov_avg(self.get_time_series_rs(data, True)))
-        d, date = self.compute_distance(data_rs, self.profile)
+        if self.processus :
+            data_rs = self.weekly_average(self.get_time_series_rs(data, True))
+            d, date = self.compute_integral(data_rs, self.profile)
+        else:
+            data_rs = self.weekly_average(self.mov_avg(self.get_time_series_rs(data, True)))
+            d, date = self.compute_distance(data_rs, self.profile)
         threshold, quant = self.add_to_dist(d, date, distribution)
 
         if anomaly or not threshold:
@@ -138,6 +149,21 @@ class TimesSeriesLearning(object):
                        radius=int(self.dist_radius), dist=euclidean)
         # print('distance: ', d)
         return d, date
+
+    def compute_integral(self,streaming_data, profile_type):
+        minute = streaming_data.index.get_level_values('minute')[0]
+        hour = streaming_data.index.get_level_values('hour')[0]
+        weekday = streaming_data.index.get_level_values('weekday')[0]
+        date = weekday * 1440 + hour * 60 + minute
+        # print('caca', streaming_data[weekday][hour][minute:int(minute + self.dist_period)].values)
+        # print('pipi',profile_type[weekday][hour][minute:int(minute + self.dist_period)].values)
+        d, _ = np.sum(np.subtract(profile_type[weekday][hour][minute:int(minute + self.dist_period)].values,
+                                  streaming_data[weekday][hour].values)*self.period)
+        # print('distance: ', d)
+        return d, date
+
+
+
 
     # compute quantiles and see if d belongs to
     def threshold(self, d, ind, distribution):
