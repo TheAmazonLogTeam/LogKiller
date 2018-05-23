@@ -21,7 +21,8 @@
       <file leaf-file-name="server_profile_learning.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="824">
+              <caret line="49" column="38" lean-forward="true" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -32,8 +33,8 @@
       <file leaf-file-name="times_series_learning.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/times_series_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="43" column="75" lean-forward="true" selection-start-line="43" selection-start-column="75" selection-end-line="43" selection-end-column="75" />
+            <state relative-caret-position="737">
+              <caret line="111" column="47" selection-start-line="111" selection-start-column="47" selection-end-line="111" selection-end-column="47" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -312,7 +313,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526997603856</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Implementation Intensity signal">
+      <created>1526998913717</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1526998913717</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -348,7 +356,8 @@
     <MESSAGE value="test phase 2 done" />
     <MESSAGE value="Streaming test finished." />
     <MESSAGE value="All done !!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="All done !!!!" />
+    <MESSAGE value="Implementation Intensity signal" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementation Intensity signal" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
@@ -834,7 +843,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="824">
+          <caret line="49" column="38" lean-forward="true" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -843,8 +853,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/times_series_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="43" column="75" lean-forward="true" selection-start-line="43" selection-start-column="75" selection-end-line="43" selection-end-column="75" />
+        <state relative-caret-position="737">
+          <caret line="111" column="47" selection-start-line="111" selection-start-column="47" selection-end-line="111" selection-end-column="47" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>

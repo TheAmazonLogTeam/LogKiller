@@ -100,14 +100,16 @@ class TimesSeriesLearning(object):
         data['hour'] = data.index.hour
         data["weekday"] = data.index.weekday
         data["weekday_name"] = data.index.weekday_name
-        return data.groupby(['weekday', 'hour', 'minute']).mean()['timestamp']
+        if self.processus:
+            return data
+        else:
+            return data.groupby(['weekday', 'hour', 'minute']).mean()['timestamp']
 
     # Set the profile
 
     def set_profile(self, data):
         data.index = pd.to_datetime(data.timestamp, format='%Y-%m-%d %H:%M:%S')
         data_rs = self.get_time_series_rs(data)
-        self.learning_week_period = (data_rs.index[0] - data_rs.index[-1]).seconds
         self.compute_max_spread(data)
         if self.processus:
             self.profile = self.weekly_average(data_rs)
@@ -161,8 +163,6 @@ class TimesSeriesLearning(object):
                                   streaming_data[weekday][hour].values)*self.period)
         # print('distance: ', d)
         return d, date
-
-
 
 
     # compute quantiles and see if d belongs to
