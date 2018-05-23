@@ -35,6 +35,7 @@ class TimesSeriesLearning(object):
         self.max_spread = 0
         self.min_spread = np.inf
         self.processus = processus
+        self.learning_week_period = None
 
     # Resample
     def get_time_series_rs(self, data, streaming=False):
@@ -110,6 +111,7 @@ class TimesSeriesLearning(object):
     def set_profile(self, data):
         data.index = pd.to_datetime(data.timestamp, format='%Y-%m-%d %H:%M:%S')
         data_rs = self.get_time_series_rs(data)
+        self.learning_week_period = (data_rs.index[0] - data_rs.index[-1]).seconds
         self.compute_max_spread(data)
         if self.processus:
             self.profile = self.weekly_average(data_rs)
@@ -159,8 +161,11 @@ class TimesSeriesLearning(object):
         date = weekday * 1440 + hour * 60 + minute
         # print('caca', streaming_data[weekday][hour][minute:int(minute + self.dist_period)].values)
         # print('pipi',profile_type[weekday][hour][minute:int(minute + self.dist_period)].values)
-        d, _ = np.sum(np.subtract(profile_type[weekday][hour][minute:int(minute + self.dist_period)].values,
-                                  streaming_data[weekday][hour].values)*self.period)
+        if minute > 0:
+            ref = profile_type[weekday][hour][minute:int(minute + self.dist_period)].values - profile_type[weekday][hour][minute-1]
+        else:
+            ref = profile_type[weekday][hour-1][minute:int(minute + self.dist_period)].values -profile_type[weekday][hour-1][- 1]
+        d = np.sum(np.subtract(ref, streaming_data[weekday][hour].values)*self.period)
         # print('distance: ', d)
         return d, date
 
