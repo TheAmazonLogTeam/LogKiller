@@ -160,15 +160,17 @@ class TimesSeriesLearning(object):
         # print('distance: ', d)
         return d, date
 
-    def compute_integral(self, streaming_data, profile_type: object):
+    def compute_integral(self, streaming_data, profile_type):
         minute = streaming_data.index[0].minute
         hour = streaming_data.index[0].hour
         weekday = streaming_data.index[0].weekday()
         ind = weekday*24*60*60 + hour*3600 + minute*60
-        ref = profile_type.loc[ind:(ind + self.dist_period*60),'intensity'].values - profile_type[ind-1:'intensity']
+        ref = profile_type.loc[ind:(ind + self.dist_period*60),'intensity'].values - \
+                  profile_type[ind-1 : 'intensity']
         d = np.sum(np.subtract(ref, streaming_data.values) * self.period)
         # print('distance: ', d)
         return d, streaming_data.index[0]
+
 
     # compute quantiles and see if d belongs to
     def threshold(self, d, ind, distribution):
