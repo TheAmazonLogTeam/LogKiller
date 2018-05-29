@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19d20b25-ea43-41ef-af04-e1ee4e72e79d" name="Default" comment="Intensity signal &lt;=&gt; process = True">
+    <list default="true" id="19d20b25-ea43-41ef-af04-e1ee4e72e79d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataframe.csv" beforeDir="false" afterPath="$PROJECT_DIR$/dataframe.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server_profile_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_profile_learning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_time_series.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test_time_series.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/times_series_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/times_series_learning.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +21,8 @@
       <file leaf-file-name="server_profile_learning.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-390">
-              <caret line="19" column="101" selection-start-line="19" selection-start-column="101" selection-end-line="19" selection-end-column="101" />
+            <state relative-caret-position="348">
+              <caret line="38" column="32" lean-forward="true" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -35,8 +33,8 @@
       <file leaf-file-name="times_series_learning.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/times_series_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1201">
-              <caret line="175" column="21" lean-forward="true" selection-start-line="175" selection-start-column="21" selection-end-line="175" selection-end-column="21" />
+            <state relative-caret-position="1143">
+              <caret line="215" column="22" lean-forward="true" selection-start-line="215" selection-start-column="22" selection-end-line="215" selection-end-column="22" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -371,11 +369,19 @@
       <option name="project" value="LOCAL" />
       <updated>1527597347509</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Intensity signal &lt;=&gt; process = True">
+      <created>1527609040040</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1527609040040</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="125" y="13" width="3076" height="1788" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49097937" visible="true" weight="0.13697253" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -894,8 +900,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-390">
-          <caret line="19" column="101" selection-start-line="19" selection-start-column="101" selection-end-line="19" selection-end-column="101" />
+        <state relative-caret-position="348">
+          <caret line="38" column="32" lean-forward="true" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -904,8 +910,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/times_series_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1201">
-          <caret line="175" column="21" lean-forward="true" selection-start-line="175" selection-start-column="21" selection-end-line="175" selection-end-column="21" />
+        <state relative-caret-position="1143">
+          <caret line="215" column="22" lean-forward="true" selection-start-line="215" selection-start-column="22" selection-end-line="215" selection-end-column="22" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
