@@ -16,8 +16,8 @@ class ServerProfileLearning(object):
         self.data_prep = None
         self.hostname = self.data.iloc[0, 1]
         self.server_profile = dict()
-        self.distribution = distribution  # distribution od distance list same for all servers all clusters be carefull sorted containers
-        self.distribution_period = distribution_period  # distribution period where we aggregate distance score
+        self.distribution = distribution  # distribution of distance list same for all servers all clusters be carefull sorted containers
+        self.distribution_period = distribution_period  # distribution period where we compute metric
         self.level_threshold = level_threshold  # level we consider for outliers
         self.verbose = verbose
         self.processus = processus

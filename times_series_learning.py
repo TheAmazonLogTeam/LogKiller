@@ -4,6 +4,7 @@ import pandas as pd
 from scipy.spatial.distance import euclidean
 from fastdtw import fastdtw
 from scipy.stats.mstats import mquantiles
+import calendar
 from collections import defaultdict
 from datetime import datetime
 import time
@@ -129,9 +130,10 @@ class TimesSeriesLearning(object):
         anomaly = False
         threshold = False
         data.index = pd.to_datetime(data.timestamp, format='%Y-%m-%d %H:%M:%S')
+        data_rs = data.drop(data.columns[1:len(data.columns) - 1], axis=1)
         anomaly, max_spread, min_spread = self.eval_max_spread(data)
         if self.processus:
-            data_rs = self.weekly_average(self.get_time_series_rs(data, True))
+            data_rs = self.get_time_series_rs(data, True)
             d, date = self.compute_integral(data_rs, self.profile)
         else:
             data_rs = self.weekly_average(self.mov_avg(self.get_time_series_rs(data, True)))
@@ -164,13 +166,19 @@ class TimesSeriesLearning(object):
         minute = streaming_data.index[0].minute
         hour = streaming_data.index[0].hour
         weekday = streaming_data.index[0].weekday()
-        ind = weekday*24*60*60 + hour*3600 + minute*60
-        ref = profile_type.loc[ind:(ind + self.dist_period*60),'intensity'].values - \
-                  profile_type[ind-1 : 'intensity']
-        d = np.sum(np.subtract(ref, streaming_data.values) * self.period)
-        # print('distance: ', d)
-        return d, streaming_data.index[0]
+        ind = weekday*24*3600 + hour*3600 + minute*60
+        if ind > 0:
+            ref = np.subtract(profile_type.loc[ind:(ind + self.dist_period*60), 'intensity'].values,
+                              profile_type.loc[ind-1, 'intensity'])
+        else:
+            ref = profile_type.loc[ind:(ind + self.dist_period * 60), 'intensity'].values
+        d = np.sum(np.subtract(ref, streaming_data.values))
+        print('distance: ', d)
+        return d, ind
 
+    def compute_spread_metric(self, data):
+        metric = np.max(data[1:]-data[:-1])
+        return metric
 
     # compute quantiles and see if d belongs to
     def threshold(self, d, ind, distribution):
@@ -186,8 +194,10 @@ class TimesSeriesLearning(object):
     # adding or not the distance to the actual distribution
     # frequentist view
     def add_to_dist(self, dist_score, date, distribution):
-
-        ind = date // self.distribution_period
+        if self.processus:
+            ind = date // (self.distribution_period*60)
+        else:
+            ind = date // (self.distribution_period)
         level_ok, quant = self.threshold(dist_score, ind, distribution)
         if level_ok:
             distribution[int(ind)].add(float(dist_score))
