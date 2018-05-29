@@ -20,7 +20,7 @@ import time
 
 class TimesSeriesLearning(object):
 
-    def __init__(self, parameters, distribution_period, level_threshold, processus):
+    def __init__(self, parameters, distribution_period, level_threshold, processus=True):
         # self.learning_week_period = lwp  # seconds between first and last element
         self.period = parameters[0]  # Sampling Period
         self.m_avg_period = parameters[1]  # m_avg_period
@@ -34,24 +34,33 @@ class TimesSeriesLearning(object):
         self.distribution_period = distribution_period  # in minutes
         self.max_spread = 0
         self.min_spread = np.inf
-        self.processus = processus
         self.learning_week_period = None
+        self.processus = processus
 
     # Resample
     def get_time_series_rs(self, data, streaming=False):
-        # t0 = time.time()
-        d_min = data.drop(data.columns[1:], axis=1)
-        if self.processus:
-            d_min = d_min.resample(str(self.period) + 'S').count().cumsum()
-        else:
-            d_min = d_min.resample(str(self.period) + 'min').count()
         if streaming:
-            data_count = np.zeros(15, dtype=int)
-            data_count[:d_min.timestamp.values.shape[0]] = d_min.timestamp.values
-            d_min = pd.DataFrame(data_count,
-                                 columns=['timestamp'],
-                                 index=pd.date_range(start=data.index[0],
-                                                     periods=int(self.dist_period), freq='min')).fillna(0)
+            if not self.processus:
+                d_min = data.resample(str(self.period) + 'min').count()
+                d_min = pd.DataFrame(d_min,
+                                     columns=['timestamp'],
+                                     index=pd.date_range(start=d_min.index[0],
+                                                         periods=int(self.dist_period), freq='min')).fillna(0)
+            else:
+                d_min = data.resample(str(self.period) + 'S').count().cumsum()
+                d_min = pd.DataFrame(d_min,
+                                     columns=['timestamp'],
+                                     index=pd.date_range(start=d_min.index[0],
+                                                         periods=int(self.dist_period) * 60,
+                                                         freq='S')).fillna(d_min.timestamp.values[-1])
+        else:
+            data.sort_index(inplace=True)
+            if self.processus:
+                d_min = data.resample(str(self.period) + 'S').count().cumsum()['timestamp'].values
+                d_min = pd.DataFrame(d_min, columns=['intensity'])
+            else:
+                d_min = data.resample(str(self.period) + 'min').count()
+
         # print('Resample processed in:', time.time()-t0)
         return d_min
 
@@ -97,24 +106,22 @@ class TimesSeriesLearning(object):
 
     # Dataframe for grouping per week
     def weekly_average(self, data):
+        data['second'] = data.index.second
         data['minute'] = data.index.minute
         data['hour'] = data.index.hour
         data["weekday"] = data.index.weekday
-        data["weekday_name"] = data.index.weekday_name
-        if self.processus:
-            return data
-        else:
-            return data.groupby(['weekday', 'hour', 'minute']).mean()['timestamp']
+        return data.groupby(['weekday', 'hour', 'minute']).mean()['timestamp']
 
     # Set the profile
 
     def set_profile(self, data):
         data.index = pd.to_datetime(data.timestamp, format='%Y-%m-%d %H:%M:%S')
-        data_rs = self.get_time_series_rs(data)
-        self.learning_week_period = (data_rs.index[0] - data_rs.index[-1]).seconds
+        data_rs= data.drop(data.columns[1:len(data.columns) - 1], axis=1)
+        data_rs = self.get_time_series_rs(data_rs)
+        self.learning_week_period = data_rs.shape[0]
         self.compute_max_spread(data)
         if self.processus:
-            self.profile = self.weekly_average(data_rs)
+            self.profile = data_rs
         else:
             self.profile = self.weekly_average(self.mov_avg(data_rs))
 
@@ -123,7 +130,7 @@ class TimesSeriesLearning(object):
         threshold = False
         data.index = pd.to_datetime(data.timestamp, format='%Y-%m-%d %H:%M:%S')
         anomaly, max_spread, min_spread = self.eval_max_spread(data)
-        if self.processus :
+        if self.processus:
             data_rs = self.weekly_average(self.get_time_series_rs(data, True))
             d, date = self.compute_integral(data_rs, self.profile)
         else:
@@ -141,7 +148,6 @@ class TimesSeriesLearning(object):
         return anomaly, max_spread, min_spread, d, date, threshold, quant
 
     def compute_distance(self, streaming_data, profile_type):
-
         minute = streaming_data.index.get_level_values('minute')[0]
         hour = streaming_data.index.get_level_values('hour')[0]
         weekday = streaming_data.index.get_level_values('weekday')[0]
@@ -154,21 +160,15 @@ class TimesSeriesLearning(object):
         # print('distance: ', d)
         return d, date
 
-    def compute_integral(self,streaming_data, profile_type):
-        minute = streaming_data.index.get_level_values('minute')[0]
-        hour = streaming_data.index.get_level_values('hour')[0]
-        weekday = streaming_data.index.get_level_values('weekday')[0]
-        date = weekday * 1440 + hour * 60 + minute
-        # print('caca', streaming_data[weekday][hour][minute:int(minute + self.dist_period)].values)
-        # print('pipi',profile_type[weekday][hour][minute:int(minute + self.dist_period)].values)
-        if minute > 0:
-            ref = profile_type[weekday][hour][minute:int(minute + self.dist_period)].values - profile_type[weekday][hour][minute-1]
-        else:
-            ref = profile_type[weekday][hour-1][minute:int(minute + self.dist_period)].values -profile_type[weekday][hour-1][- 1]
-        d = np.sum(np.subtract(ref, streaming_data[weekday][hour].values)*self.period)
+    def compute_integral(self, streaming_data, profile_type: object):
+        minute = streaming_data.index[0].minute
+        hour = streaming_data.index[0].hour
+        weekday = streaming_data.index[0].weekday()
+        ind = weekday*24*60*60 + hour*3600 + minute*60
+        ref = profile_type.loc[ind:(ind + self.dist_period*60),'intensity'].values - profile_type[ind-1:'intensity']
+        d = np.sum(np.subtract(ref, streaming_data.values) * self.period)
         # print('distance: ', d)
-        return d, date
-
+        return d, streaming_data.index[0]
 
     # compute quantiles and see if d belongs to
     def threshold(self, d, ind, distribution):
@@ -210,6 +210,5 @@ class TimesSeriesLearning(object):
     #                                                                           self.profile_type.loc[weekday][hour][
     #                                                                           minute: last_minute].values) / \
     #                                                                        self.learning_week_period
-
     # compute distance the size of the window of the streaming batch should be
     # arrange before calling this function
