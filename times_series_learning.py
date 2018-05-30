@@ -172,12 +172,14 @@ class TimesSeriesLearning(object):
         return d, date
 
     def compute_integral(self, streaming_data, profile_type):
+        sec = streaming_data.index[0].second
         minute = streaming_data.index[0].minute
         hour = streaming_data.index[0].hour
         weekday = streaming_data.index[0].weekday()
         mask = (profile_type.index.weekday == weekday) & \
                (profile_type.index.hour == hour) & \
-               (profile_type.index.minute == minute)
+               (profile_type.index.minute == minute) & \
+               (profile_type.index.second == sec)
         start_date = profile_type.loc[mask,'timestamp'].index[0]
         if start_date > profile_type.index[0]:
             ref = np.subtract(profile_type.loc[start_date: start_date + dt.timedelta(seconds=self.dist_period*60-1),'timestamp'].values,
