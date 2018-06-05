@@ -136,7 +136,7 @@ class TimesSeriesLearning(object):
         else:
             self.profile = self.weekly_average(self.mov_avg(data_rs))
 
-    def compute_distance_profile(self, data, distribution, train_mode, verbose=False):
+    def compute_distance_profile(self, data, distribution, measures, train_mode, verbose=False):
         anomaly = False
         threshold = True
         data.index = pd.to_datetime(data.timestamp, format='%Y-%m-%d %H:%M:%S')
@@ -147,7 +147,8 @@ class TimesSeriesLearning(object):
         else:
             data_rs = self.weekly_average(self.mov_avg(self.get_time_series_rs(data, True)))
             d, date = self.compute_distance(data_rs, self.profile)
-        threshold, quant = self.add_to_dist(d, date, distribution, train_mode)
+        m = self.compute_spread_metric(data_rs)
+        threshold, quant = self.add_to_dist(d, m,  date, distribution, measures, train_mode)
 
         # if anomaly or not threshold:
         #     print("Anomaly detected \n")
@@ -189,7 +190,9 @@ class TimesSeriesLearning(object):
         if streaming_data.values.ravel().shape[0] - ref.shape[0] != 0:
             print('streaming shape', streaming_data.values.ravel().shape[0])
             print('ref shape', ref.shape[0])
-        d = np.sum(np.subtract(ref, streaming_data.values.ravel()))
+            d = 0
+        else :
+            d = np.sum(np.subtract(ref, streaming_data.values.ravel()))
         #print('distance: ', d)
         return d, streaming_data.index[0]
 
@@ -210,17 +213,21 @@ class TimesSeriesLearning(object):
 
     # adding or not the distance to the actual distribution
     # frequentist view
-    def add_to_dist(self, dist_score, date, distribution, train_mode):
+    def add_to_dist(self, dist_score, metric,  date, distribution,measure, train_mode):
         level_ok = True
         quant = 0.1
         minute = date.minute
         hour = date.hour
         weekday = date.weekday()
         d = weekday*24*3600 + hour*3600 + minute*60
+
         if self.processus:
             ind = d // (self.distribution_period*60)
         else:
             ind = d // self.distribution_period
+        measure[ind]['Area_Difference'].append(dist_score)
+        measure[ind]['Max_Spread'].append(metric)
+
         if not train_mode:
             level_ok, quant = self.threshold(dist_score, ind, distribution)
             if level_ok:

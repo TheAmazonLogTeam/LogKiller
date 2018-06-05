@@ -4,6 +4,7 @@
     <list default="true" id="19d20b25-ea43-41ef-af04-e1ee4e72e79d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/test_intensity_processus-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/test_intensity_processus-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_profile_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_profile_learning.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_intensity_processus.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test_intensity_processus.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/times_series_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/times_series_learning.py" afterDir="false" />
     </list>
@@ -22,8 +23,8 @@
       <file leaf-file-name="server_profile_learning.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="38" column="32" lean-forward="true" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+            <state relative-caret-position="605">
+              <caret line="31" column="63" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -34,8 +35,8 @@
       <file leaf-file-name="times_series_learning.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/times_series_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2548">
-              <caret line="182" column="63" selection-start-line="182" selection-start-column="63" selection-end-line="182" selection-end-column="63" />
+            <state relative-caret-position="1404">
+              <caret line="237" lean-forward="true" selection-start-line="237" selection-end-line="237" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -46,8 +47,8 @@
       <file leaf-file-name="logparser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logparser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+            <state relative-caret-position="116">
+              <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -82,7 +83,7 @@
       <file leaf-file-name="class_time_series.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/class_time_series.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="679">
+            <state relative-caret-position="2581">
               <caret line="94" column="91" selection-start-line="94" selection-start-column="91" selection-end-line="94" selection-end-column="91" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -397,7 +398,7 @@
   <component name="ToolWindowManager">
     <frame x="125" y="13" width="3076" height="1788" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49097937" visible="true" weight="0.13697253" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49033505" visible="true" weight="0.13898191" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3298969" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32925257" />
@@ -405,15 +406,25 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.32925257" />
       <window_info id="Structure" order="1" sideWeight="0.50107294" side_tool="true" weight="0.12056263" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.31525016" />
-      <window_info id="Favorites" order="2" sideWeight="0.5090206" side_tool="true" visible="true" weight="0.13697253" />
+      <window_info id="Favorites" order="2" sideWeight="0.50966495" side_tool="true" visible="true" weight="0.13898191" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39948454" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32925257" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49097937" visible="true" weight="0.13697253" />
+      <window_info id="Structure" order="1" sideWeight="0.50107294" side_tool="true" weight="0.12056263" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32925257" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39948454" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3298969" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Favorites" order="2" sideWeight="0.5090206" side_tool="true" visible="true" weight="0.13697253" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.31525016" />
+      <window_info anchor="right" id="Python Console" order="3" weight="0.3499665" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -868,8 +879,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logparser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+        <state relative-caret-position="116">
+          <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -905,7 +916,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/class_time_series.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="679">
+        <state relative-caret-position="2581">
           <caret line="94" column="91" selection-start-line="94" selection-start-column="91" selection-end-line="94" selection-end-column="91" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -915,8 +926,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="38" column="32" lean-forward="true" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+        <state relative-caret-position="605">
+          <caret line="31" column="63" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -925,8 +936,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/times_series_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2548">
-          <caret line="182" column="63" selection-start-line="182" selection-start-column="63" selection-end-line="182" selection-end-column="63" />
+        <state relative-caret-position="1404">
+          <caret line="237" lean-forward="true" selection-start-line="237" selection-end-line="237" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>

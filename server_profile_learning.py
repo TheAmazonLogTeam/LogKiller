@@ -4,6 +4,7 @@ import time
 import datetime as dt
 import sortedcontainers
 import pandas as pd
+from collections import defaultdict
 
 
 class ServerProfileLearning(object):
@@ -24,6 +25,16 @@ class ServerProfileLearning(object):
         self.processus = processus
         self.moving_window = moving_window
         self.train_mode = train_mode
+        self.measures = self.initdict()
+
+    def initdict(self):
+        d = defaultdict(dict)
+        for i in range(int(self.distribution_period/(24*6*60))):
+            d[i] = {}
+            d[i]['Area_Difference'] = []
+            d[i]['Max_Spread'] = []
+        return d
+
 
     # sortedcontainers.SortedDict(sortedcontainers.SortedList())
 
@@ -56,6 +67,7 @@ class ServerProfileLearning(object):
         t = self.server_profile[cluster_name]
         anomaly, max_spread, min_spread, d, date, threshold, quant = t.compute_distance_profile(streaming_data,
                                                                                                 self.distribution,
+                                                                                                self.measures,
                                                                                                 self.train_mode,
                                                                                                 self.verbose)
         #streaming_data_prep = self.preprocess_data(streaming_data)
