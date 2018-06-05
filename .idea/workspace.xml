@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="19d20b25-ea43-41ef-af04-e1ee4e72e79d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/test_intensity_processus-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/test_intensity_processus-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataframe.csv" beforeDir="false" afterPath="$PROJECT_DIR$/dataframe.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server_profile_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_profile_learning.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_intensity_processus.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test_intensity_processus.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/times_series_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/times_series_learning.py" afterDir="false" />
@@ -20,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="server_profile_learning.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="server_profile_learning.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="605">
-              <caret line="31" column="63" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
+            <state relative-caret-position="157">
+              <caret line="31" column="66" selection-start-line="31" selection-start-column="66" selection-end-line="31" selection-end-column="66" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -32,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="times_series_learning.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="times_series_learning.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/times_series_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1404">
-              <caret line="237" lean-forward="true" selection-start-line="237" selection-end-line="237" />
+            <state relative-caret-position="1346">
+              <caret line="228" column="32" selection-start-line="228" selection-start-column="32" selection-end-line="228" selection-end-column="32" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -59,7 +59,7 @@
       <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
+            <state relative-caret-position="464">
               <caret line="16" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
@@ -123,8 +123,8 @@
         <option value="$PROJECT_DIR$/../../../Cours/MDI343/TP/TPSVM/SVMsources/svm_script.py" />
         <option value="$PROJECT_DIR$/../../../Cours/MDI343/TP/TPSVM/SVMsources/svm_gui.py" />
         <option value="$PROJECT_DIR$/class_time_series.py" />
-        <option value="$PROJECT_DIR$/server_profile_learning.py" />
         <option value="$PROJECT_DIR$/times_series_learning.py" />
+        <option value="$PROJECT_DIR$/server_profile_learning.py" />
       </list>
     </option>
   </component>
@@ -392,11 +392,19 @@
       <option name="project" value="LOCAL" />
       <updated>1527637664691</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Done distribution moving average 1 mn">
+      <created>1528212663267</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1528212663267</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="125" y="13" width="3076" height="1788" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49033505" visible="true" weight="0.13898191" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -887,16 +895,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/logreader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="29">
@@ -924,22 +922,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
+    <entry file="file://$PROJECT_DIR$/times_series_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="605">
-          <caret line="31" column="63" selection-start-line="31" selection-start-column="63" selection-end-line="31" selection-end-column="63" />
+        <state relative-caret-position="1346">
+          <caret line="228" column="32" selection-start-line="228" selection-start-column="32" selection-end-line="228" selection-end-column="32" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/times_series_learning.py">
+    <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1404">
-          <caret line="237" lean-forward="true" selection-start-line="237" selection-end-line="237" />
+        <state relative-caret-position="464">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
           <folding>
-            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="31" column="66" selection-start-line="31" selection-start-column="66" selection-end-line="31" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>

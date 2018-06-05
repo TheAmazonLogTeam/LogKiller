@@ -213,7 +213,7 @@ class TimesSeriesLearning(object):
 
     # adding or not the distance to the actual distribution
     # frequentist view
-    def add_to_dist(self, dist_score, metric,  date, distribution,measure, train_mode):
+    def add_to_dist(self, dist_score, metric,  date, distribution, measure, train_mode):
         level_ok = True
         quant = 0.1
         minute = date.minute

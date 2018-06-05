@@ -29,7 +29,7 @@ class ServerProfileLearning(object):
 
     def initdict(self):
         d = defaultdict(dict)
-        for i in range(int(self.distribution_period/(24*6*60))):
+        for i in range(int((24*6*60)/self.distribution_period)+1):
             d[i] = {}
             d[i]['Area_Difference'] = []
             d[i]['Max_Spread'] = []
