@@ -24,7 +24,9 @@ y = analyzer.fit_clusterize(X,X_count)
 # Stockage des labels de clustering
 df_log['label'] = y
 
+df_log = df_log.sort_values('label')
+
 df_log.to_csv('dataframe.csv')
 
 # Affichage des clusters
-#print_clusters(df_log)
+# print_clusters(df_log)

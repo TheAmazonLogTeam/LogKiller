@@ -20,11 +20,11 @@ def read_dir(dir_path, nb_files_max=np.inf):
     for filename in glob(dir_path):
         if p > nb_files_max:
             break
-        print(filename)
+        #print(filename)
         res += read_file(filename)
         p += 1
 
-    print('\n[Sucess] %d files loaded' % (p))
+    #print('\n[Success] %d files loaded' % (p))
 
     return res
 
