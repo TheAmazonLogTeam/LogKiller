@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="19d20b25-ea43-41ef-af04-e1ee4e72e79d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataframe.csv" beforeDir="false" afterPath="$PROJECT_DIR$/dataframe.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server_profile_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_profile_learning.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_intensity_processus.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/test_intensity_processus.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/times_series_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/times_series_learning.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,10 +17,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="server_profile_learning.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="server_profile_learning.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
+            <state relative-caret-position="725">
               <caret line="31" column="66" selection-start-line="31" selection-start-column="66" selection-end-line="31" selection-end-column="66" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
@@ -32,11 +29,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="times_series_learning.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="times_series_learning.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/times_series_learning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1346">
-              <caret line="228" column="32" selection-start-line="228" selection-start-column="32" selection-end-line="228" selection-end-column="32" />
+            <state relative-caret-position="29">
+              <caret line="177" column="31" lean-forward="true" selection-start-line="177" selection-start-column="31" selection-end-line="177" selection-end-column="31" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -47,7 +44,7 @@
       <file leaf-file-name="logparser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logparser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
+            <state relative-caret-position="87">
               <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -59,7 +56,7 @@
       <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
+            <state relative-caret-position="348">
               <caret line="16" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
@@ -123,8 +120,8 @@
         <option value="$PROJECT_DIR$/../../../Cours/MDI343/TP/TPSVM/SVMsources/svm_script.py" />
         <option value="$PROJECT_DIR$/../../../Cours/MDI343/TP/TPSVM/SVMsources/svm_gui.py" />
         <option value="$PROJECT_DIR$/class_time_series.py" />
-        <option value="$PROJECT_DIR$/times_series_learning.py" />
         <option value="$PROJECT_DIR$/server_profile_learning.py" />
+        <option value="$PROJECT_DIR$/times_series_learning.py" />
       </list>
     </option>
   </component>
@@ -399,14 +396,20 @@
       <option name="project" value="LOCAL" />
       <updated>1528212663267</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="metric en fonction du temps done">
+      <created>1528213722369</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1528213722369</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="125" y="13" width="3076" height="1788" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49033505" visible="true" weight="0.13898191" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49033505" visible="true" weight="0.13898191" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3298969" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32925257" />
@@ -417,22 +420,12 @@
       <window_info id="Favorites" order="2" sideWeight="0.50966495" side_tool="true" visible="true" weight="0.13898191" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39948454" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32925257" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49097937" visible="true" weight="0.13697253" />
-      <window_info id="Structure" order="1" sideWeight="0.50107294" side_tool="true" weight="0.12056263" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32925257" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39948454" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3298969" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info id="Favorites" order="2" sideWeight="0.5090206" side_tool="true" visible="true" weight="0.13697253" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.31525016" />
-      <window_info anchor="right" id="Python Console" order="3" weight="0.3499665" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -448,7 +441,8 @@
     <MESSAGE value="Implementation Intensity signal" />
     <MESSAGE value="Intensity signal &lt;=&gt; process = True" />
     <MESSAGE value="Done distribution moving average 1 mn" />
-    <option name="LAST_COMMIT_MESSAGE" value="Done distribution moving average 1 mn" />
+    <MESSAGE value="metric en fonction du temps done" />
+    <option name="LAST_COMMIT_MESSAGE" value="metric en fonction du temps done" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
@@ -887,7 +881,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logparser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
+        <state relative-caret-position="87">
           <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -922,19 +916,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/times_series_learning.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1346">
-          <caret line="228" column="32" selection-start-line="228" selection-start-column="32" selection-end-line="228" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
+        <state relative-caret-position="348">
           <caret line="16" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
@@ -944,10 +928,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server_profile_learning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
+        <state relative-caret-position="725">
           <caret line="31" column="66" selection-start-line="31" selection-start-column="66" selection-end-line="31" selection-end-column="66" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/times_series_learning.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="29">
+          <caret line="177" column="31" lean-forward="true" selection-start-line="177" selection-start-column="31" selection-end-line="177" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
