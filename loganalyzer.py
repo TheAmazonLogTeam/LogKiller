@@ -1,6 +1,7 @@
 import numpy as np
 import time
 from collections import Counter
+from string import punctuation
 
 
 class MessageLogAnalyzer(object):
@@ -55,7 +56,6 @@ class MessageLogAnalyzer(object):
                 "who", "whoever", "whole", "whom", "whose", "why", "will", "with",
                 "within", "without", "would", "yet", "you", "your", "yours", "yourself",
                 "yourselves", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])
-
         else:
             self.stop_words = []
 
@@ -154,42 +154,37 @@ class MessageLogAnalyzer(object):
 
         y = np.empty(X.shape[0], object)
 
-        max_X_count = X_count.max(axis=1)
         argmax_X_count = X_count.argmax(axis=1)
-        labels = np.unique(max_X_count)
 
         clusters = {}
         k = 0
-        for label in labels[::-1]:
 
-            mask = np.array(max_X_count == label)
+        for position in np.unique(argmax_X_count):
 
-            for position in np.unique(argmax_X_count):
+            new_mask = np.array(argmax_X_count == position) 
 
-                new_mask = mask & np.array(
-                    argmax_X_count == position)  # à optimiser
+            words = X[new_mask, position]
+            words = words[words != np.array(None)]
+            words = np.unique(words)
 
-                words = X[new_mask, position]
-                words = words[words != np.array(None)]
-                words = np.unique(words)
+            for word in words:
 
-                for word in words:
+                word_mask = np.array(X[:, position] == word)
+                last_mask = new_mask & word_mask
 
-                    word_mask = np.array(X[:, position] == word)
-                    last_mask = new_mask & word_mask
+                log_keys = print_description(X[last_mask])
 
-                    log_keys = print_description(X[last_mask])  # à revoir
-                    y[last_mask] = log_keys
+                y[last_mask] = log_keys
 
-                    clusters[(int(label), position, word)] = {
-                        'log_keys': log_keys, 'size': sum(last_mask)}
+                clusters[(position, word)] = {
+                    'log_keys': log_keys, 'size': sum(last_mask)}
 
         self.clusters = clusters
 
         end = time.time()
 
         print('[Success] %d Logs reduced into %d Clusters within %.2fs' %
-              (len(max_X_count), len(set(y)), end - start))
+              (len(argmax_X_count), len(set(y)), end - start))
 
         return y
 
@@ -212,18 +207,18 @@ class MessageLogAnalyzer(object):
         argmax_X_count = X_count.argmax(axis=1)
 
         for i, line in enumerate(X):
-            if (int(max_X_count[i]), argmax_X_count[i], line[argmax_X_count[i]]) in self.clusters:
-                y[i] = self.clusters[(
-                    int(max_X_count[i]), argmax_X_count[i], line[argmax_X_count[i]])]['log_keys']
+            if (argmax_X_count[i], line[argmax_X_count[i]]) in self.clusters:
+                y[i] = self.clusters[(argmax_X_count[i], line[argmax_X_count[i]])]['log_keys']
             else:
-                y[i] = -1  # outlier
+                if set(line) == {None}:
+                    y[i] = 0 # none
+                else :
+                    y[i] = -1  # outlier
 
         end = time.time()
 
         print('[Success] %d Logs reduced into %d Clusters within %.2fs' %
               (len(max_X_count), len(set(y)), end - start))
-
-        #y = np.vectorize(self.clusters.get)(zip(max_X_count, X[:, 0]))
 
         return y
 
