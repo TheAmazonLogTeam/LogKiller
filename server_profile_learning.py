@@ -11,8 +11,8 @@ class ServerProfileLearning(object):
 
     def __init__(self, data, parameters, distribution, distribution_period, level_threshold,
                  processus=True, moving_window=60,train_mode=True, verbose=False):
-        self.label_number = len(np.unique(data['label'].values))
-        self.label = np.unique(data['label'].values)
+        self.label_number = 1 #len(np.unique(data['label'].values))
+        self.label = 1 #np.unique(data['label'].values)
         self.data = data
         self.parameters = np.ones((self.label_number + 1, 4)) * parameters  # see parameters in times_series_learning
         self.data_prep = None
@@ -26,6 +26,7 @@ class ServerProfileLearning(object):
         self.moving_window = moving_window
         self.train_mode = train_mode
         self.measures = self.initdict()
+        self.timestamp_anomaly = pd.DataFrame(columns=['Timestamp','Area_Difference'])
 
     def initdict(self):
         d = defaultdict(dict)
@@ -46,18 +47,19 @@ class ServerProfileLearning(object):
     def set_profile(self):
         t0 = time.time()
         t = tsl.TimesSeriesLearning(self.parameters[0, :],
-                                    self.distribution_period, self.level_threshold, self.processus)
+                                    self.distribution_period,
+                                    self.level_threshold, self.timestamp_anomaly, self.processus)
         t.set_profile(self.data)
         self.server_profile[self.hostname + "_general"] = t
-        self.data_prep = self.preprocess_data(self.data)
-        i = 0
-        for k, v in self.data_prep:
-            t = tsl.TimesSeriesLearning(self.parameters[i, :],
-                                        self.distribution_period, self.level_threshold, self.processus)
-            t.set_profile(v)
-            self.server_profile[self.hostname + "_" + str(k)] = t
-            print('cluster number ' + str(k) + ' of hostname: ' + self.hostname)
-            i += 1
+        #self.data_prep = self.preprocess_data(self.data)
+        # i = 0
+        # for k, v in self.data_prep:
+        #     t = tsl.TimesSeriesLearning(self.parameters[i, :],
+        #                                 self.distribution_period, self.level_threshold, self.processus)
+        #     t.set_profile(v)
+        #     self.server_profile[self.hostname + "_" + str(k)] = t
+        #     print('cluster number ' + str(k) + ' of hostname: ' + self.hostname)
+        #     i += 1
         print("Learning Server" + self.hostname + " Done in " + str(time.time() - t0))
 
     # Process distance and update distribution

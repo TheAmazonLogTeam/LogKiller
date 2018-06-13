@@ -22,7 +22,7 @@ import time
 
 class TimesSeriesLearning(object):
 
-    def __init__(self, parameters, distribution_period, level_threshold, processus=True):
+    def __init__(self, parameters, distribution_period, level_threshold, timestamp_anomaly, processus=True):
         # self.learning_week_period = lwp  # seconds between first and last element
         self.period = parameters[0]  # Sampling Period
         self.m_avg_period = parameters[1]  # m_avg_period
@@ -38,6 +38,7 @@ class TimesSeriesLearning(object):
         self.min_spread = np.inf
         self.learning_week_period = None
         self.processus = processus
+        self.timestamp_anomaly = timestamp_anomaly
         # print('Initialisation Done')
         # print('Sampling Period: ', self.period)
         # print('Moving Average Period ( DTW only): ', self.m_avg_period)
@@ -181,19 +182,20 @@ class TimesSeriesLearning(object):
                (profile_type.index.hour == hour) & \
                (profile_type.index.minute == minute) & \
                (profile_type.index.second == sec)
-        start_date = profile_type.loc[mask,'timestamp'].index[0]
-        if start_date > profile_type.index[0]:
-            ref = np.subtract(profile_type.loc[start_date: start_date + dt.timedelta(seconds=self.dist_period*60-1),'timestamp'].values,
+        start_date = profile_type.loc[:, 'timestamp'].index[0]
+        if len(profile_type.loc[mask,'timestamp'].index) > 0:
+            start_date = profile_type.loc[mask, 'timestamp'].index[0]
+
+        if start_date + dt.timedelta(seconds=self.dist_period * 60 - 1) <= profile_type.index[-1]:
+            if start_date > profile_type.index[0]:
+                ref = np.subtract(profile_type.loc[start_date: start_date + dt.timedelta(seconds=self.dist_period*60-1),'timestamp'].values,
                               profile_type.loc[start_date-dt.timedelta(seconds=1), 'timestamp'])
-        else:
-            ref = profile_type.loc[start_date: start_date + dt.timedelta(seconds=self.dist_period*60-1),'timestamp'].values
-        if streaming_data.values.ravel().shape[0] - ref.shape[0] != 0:
-            print('streaming shape', streaming_data.values.ravel().shape[0])
-            print('ref shape', ref.shape[0])
-            d = 0
-        else :
+            else:
+                ref = profile_type.loc[start_date: start_date + dt.timedelta(seconds=self.dist_period*60-1),'timestamp'].values
+
             d = np.sum(np.subtract(ref, streaming_data.values.ravel()))
-        #print('distance: ', d)
+        else:
+            d=0
         return d, streaming_data.index[0]
 
     def compute_spread_metric(self, data):
@@ -214,6 +216,7 @@ class TimesSeriesLearning(object):
     # adding or not the distance to the actual distribution
     # frequentist view
     def add_to_dist(self, dist_score, metric,  date, distribution, measure, train_mode):
+        anomaly = dict()
         level_ok = True
         quant = 0.1
         minute = date.minute
@@ -234,6 +237,13 @@ class TimesSeriesLearning(object):
                 distribution[int(ind)].add(float(dist_score))
             else:
                 print("Alert Anomaly detected, the distance is in the " + str(self.level_threshold))
+                print("Timestamp is:", str(date))
+                print("Area difference value is : ", dist_score)
+                anomaly['Area_Difference'] = dist_score
+                anomaly['Timestamp'] = date
+                self.timestamp_anomaly = pd.concat([self.timestamp_anomaly,pd.DataFrame([anomaly])],
+                                                   axis=0)
+
         else:
             distribution[int(ind)].add(float(dist_score))
         return level_ok, quant
