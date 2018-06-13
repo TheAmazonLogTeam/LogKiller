@@ -55,6 +55,7 @@ class TimesSeriesLearning(object):
                                      index=pd.date_range(start=d_min.index[0],
                                                          periods=int(self.dist_period), freq='min')).fillna(0)
             else:
+
                 data = data.drop(data.columns[1:len(data.columns) - 1], axis=1) # Drop cluster columns
                 d_min = data.resample(str(self.period) + 'S').count().cumsum()  # resample to 1 sec
                 d_min = pd.DataFrame(d_min,                                     # resample to the compute metric period
@@ -62,6 +63,8 @@ class TimesSeriesLearning(object):
                                      index=pd.date_range(start=d_min.index[0],
                                                          periods=int(self.dist_period) * 60,
                                                          freq='S')).fillna(d_min.timestamp.values[-1])
+
+
         else:
             if self.processus:
                 d_min = data.resample(str(self.period) + 'S').count().cumsum()
@@ -236,9 +239,9 @@ class TimesSeriesLearning(object):
             if level_ok:
                 distribution[int(ind)].add(float(dist_score))
             else:
-                print("Alert Anomaly detected, the distance is in the " + str(self.level_threshold))
-                print("Timestamp is:", str(date))
-                print("Area difference value is : ", dist_score)
+                #print("Alert Anomaly detected, the distance is in the " + str(self.level_threshold))
+                #print("Timestamp is:", str(date))
+                #print("Area difference value is : ", dist_score)
                 anomaly['Area_Difference'] = dist_score
                 anomaly['Timestamp'] = date
                 self.timestamp_anomaly = pd.concat([self.timestamp_anomaly,pd.DataFrame([anomaly])],
